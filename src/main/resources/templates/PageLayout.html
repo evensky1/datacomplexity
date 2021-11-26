@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Analyzer</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="../static/PageStyle.css" th:href="@{/PageStyle.css}" type="text/css"/>
+</head>
+<body>
+<form method="post" th:object="${inputCode}">
+    <div class="ioBlock">
+        <textarea id="textarea" name="Code" th:utext="${inputCode.getCode()}"></textarea>
+        <button type="submit">Check</button>
+    </div>
+</form>
+</body>
+</html>
