@@ -11,19 +11,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class PageController {
     private final CodeModel codeModel;
 
-    PageController(CodeModel codeModel){
+    PageController(CodeModel codeModel) {
         this.codeModel = codeModel;
     }
 
     @GetMapping
-    public String pageOut(Model model){
+    public String pageOut(Model model) {
         model.addAttribute("inputCode", codeModel);
         return "PageLayout";
     }
 
     @PostMapping
-    public String pageOut(@ModelAttribute("inputCode") CodeModel codeModel, Model model){
-        System.out.println(codeModel.getCode());
+    public String pageOut(@ModelAttribute("inputCode") CodeModel codeModel, Model model) {
+        model.addAttribute("spenTable", codeModel.codeSpenAnalyzing());
+        codeModel.codeChepinsAnalyzing();
+        System.out.println("amogus");
         return "PageLayout";
     }
 }

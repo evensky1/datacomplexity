@@ -11,6 +11,20 @@
         <textarea id="textarea" name="Code" th:utext="${inputCode.getCode()}"></textarea>
         <button type="submit">Check</button>
     </div>
+    <div class="tableBox">
+        <table class="countLines">
+            <tr>
+                <th>j</th>
+                <th>Переменная</th>
+                <th>Спен</th>
+            </tr>
+            <tr th:each="instance: ${spenTable}">
+                <td></td>
+                <td th:text="${instance.key}">smth</td>
+                <td th:text="${instance.getValue().toString()}">smth</td>
+            </tr>
+        </table>
+    </div>
 </form>
 </body>
 </html>
