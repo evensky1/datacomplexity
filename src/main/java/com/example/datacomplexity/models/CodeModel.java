@@ -114,8 +114,8 @@ public class CodeModel {
             }
         } //Создаём массив переменных из таблицы со спенами
 
-        String codeTemp = code.replaceAll("(=begin\\s(.*\\r?\\n)*?=end\\s)|(#.*)", "");
-        codeTemp = codeTemp.replaceAll("(\".*?[^\\\\](\\\\\\\\)*\")|('.*?[^\\\\](\\\\\\\\)*')", "");
+        String codeTemp = code.replaceAll("(=begin\\s(.*\\r?\\n)*?=end\\s)|(#.*)", " ");
+        codeTemp = codeTemp.replaceAll("(\".*?[^\\\\](\\\\\\\\)*\")|('.*?[^\\\\](\\\\\\\\)*')", "\"\"");
         String[] codeLines = codeTemp.split("\n");//Делим код по линиям, в которых будем искать признаки для Чепина
         Pattern pattern;
         Matcher matcher;
@@ -124,7 +124,7 @@ public class CodeModel {
                 pattern = Pattern.compile("\\b" + variable.getName() + "\\b");
                 matcher = pattern.matcher(line);
                 if (matcher.find()) { //Смотрим, есть ли в строке какая-либо из наших переменных
-                    pattern = Pattern.compile("gets");//gets.chomp.to_smth оператор ввода
+                    pattern = Pattern.compile("\\bgets\\b");//gets.chomp.to_smth оператор ввода
                     matcher = pattern.matcher(line);
                     if (matcher.find() &&
                             (variable.getVarType() != VarType.C ||
@@ -132,7 +132,7 @@ public class CodeModel {
                         variable.setVarType(VarType.P); //Переменная становится вводимой
                         variable.setIO(true); //Состояние IO необходимо как флажок метрик ввода/вывода
                     } else if (variable.getVarType() != VarType.C) {  //Иначе проверка на её модифицируемость
-                        pattern = Pattern.compile(variable.getName() + "(\\s[%+*\\/-]*=(?!=)|\\+\\+|--)");
+                        pattern = Pattern.compile("\\b" + variable.getName() + "\\b\\s*[%+*/-]*=(?!=)|\\+\\+|--");
                         matcher = pattern.matcher(line);
                         if (matcher.find()) {
                             if (spenTable.get(variable.getName()) != 0) {
@@ -145,7 +145,7 @@ public class CodeModel {
                     if (matcher.find()) { //то скорее-всего переменная является управляющей
                         variable.setVarType(VarType.C);
                     }
-                    pattern = Pattern.compile("puts|print");//Оператор вывода
+                    pattern = Pattern.compile("\\bputs\\b|\\bprint\\b");//Оператор вывода
                     matcher = pattern.matcher(line);
                     if (matcher.find()) {
                         variable.setIO(true); //Состояние IO необходимо для метрик ввода/вывода
