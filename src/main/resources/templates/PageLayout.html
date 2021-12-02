@@ -14,6 +14,9 @@
     <div class="tableBox">
         <table class="countLines">
             <tr>
+                <th colspan="3">Спен программы</th>
+            </tr>
+            <tr>
                 <th>j</th>
                 <th>Переменная</th>
                 <th>Спен</th>
@@ -22,6 +25,39 @@
                 <td></td>
                 <td th:text="${instance.key}">smth</td>
                 <td th:text="${instance.getValue().toString()}">smth</td>
+            </tr>
+            <tr>
+                <th colspan="3" th:utext="${inputCode.getSumSpen()}"></th>
+            </tr>
+        </table>
+        <table class="countLines">
+            <tr>
+                <th colspan="3">Полная метрика Чепина</th>
+            </tr>
+            <tr>
+                <th>j</th>
+                <th>Переменная</th>
+                <th>Группа</th>
+            </tr>
+            <tr th:each="instance: ${chepinsTable}">
+                <td></td>
+                <td th:text="${instance.getName()}">smth</td>
+                <td th:text="${instance.getVarType()}">smth</td>
+            </tr>
+        </table>
+        <table class="countLines">
+            <tr>
+                <th colspan="3">Метрика Чепина ввода-вывода</th>
+            </tr>
+            <tr>
+                <th>j</th>
+                <th>Переменная</th>
+                <th>Группа</th>
+            </tr>
+            <tr th:each="instance: ${chepinsIOTable}">
+                <td></td>
+                <td th:text="${instance.getName()}">smth</td>
+                <td th:text="${instance.getVarType()}">smth</td>
             </tr>
         </table>
     </div>

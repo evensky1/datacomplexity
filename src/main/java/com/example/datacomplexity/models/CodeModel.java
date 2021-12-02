@@ -3,6 +3,7 @@ package com.example.datacomplexity.models;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,6 +24,11 @@ public class CodeModel {
         this.variableList = new VariableList();
         this.spenTable = new HashMap<>();
     }
+
+    public VariableList getVariableList() {
+        return variableList;
+    }
+
 
     public String getCode() {
         return code;
@@ -58,12 +64,12 @@ public class CodeModel {
         return spenTable;
     }
 
-    public int getSumSpen() {
+    public String getSumSpen() {
         int sumSpen = 0;
         for (int spen : spenTable.values()) {
             sumSpen += spen;
         }
-        return sumSpen;
+        return "Суммарный спен: " + String.valueOf(sumSpen);
     }
 
     public void codeChepinsAnalyzing() {

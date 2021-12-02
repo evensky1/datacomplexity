@@ -1,7 +1,7 @@
 package com.example.datacomplexity.models;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class VariableList {
     private LinkedList<Variable> variables;
@@ -16,7 +16,19 @@ public class VariableList {
     }
 
     public LinkedList<Variable> getVariables() {
+        Collections.sort(variables, Comparator.comparing(Variable::getVarType));
         return variables;
+    }
+
+    public LinkedList<Variable> getIOVariables(){
+        LinkedList<Variable> ioVars = new LinkedList<>();
+        for(Variable variable: variables){
+            if(variable.isIO()){
+                ioVars.add(variable);
+            }
+        }
+        Collections.sort(ioVars, Comparator.comparing(Variable::getVarType));
+        return ioVars;
     }
 
     public Variable findVariableByName(String name) throws NullPointerException {

@@ -25,6 +25,8 @@ public class PageController {
     public String pageOut(@ModelAttribute("inputCode") CodeModel codeModel, Model model) {
         model.addAttribute("spenTable", codeModel.codeSpenAnalyzing());
         codeModel.codeChepinsAnalyzing();
+        model.addAttribute("chepinsTable", codeModel.getVariableList().getVariables());
+        model.addAttribute("chepinsIOTable", codeModel.getVariableList().getIOVariables());
         System.out.println("amogus");
         return "PageLayout";
     }
