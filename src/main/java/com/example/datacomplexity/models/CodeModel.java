@@ -69,7 +69,42 @@ public class CodeModel {
         for (int spen : spenTable.values()) {
             sumSpen += spen;
         }
-        return "Суммарный спен: " + String.valueOf(sumSpen);
+        return "Суммарный спен: " + sumSpen;
+    }
+
+    public String getChepinsMetric(boolean isIO) {
+        StringBuilder outString = new StringBuilder("Q =");
+        int tempSum = 0;
+        float count = 0;
+        LinkedList<Variable> variables;
+        if(isIO){
+            variables = variableList.getIOVariables();
+        } else {
+            variables = variableList.getVariables();
+        }
+        for (int i = 0; i < variables.size() - 1; i++) {
+            if (variables.get(i).getVarType() == variables.get(i + 1).getVarType()) {
+                tempSum++;
+            } else {
+                tempSum++;
+                count += tempSum * variables.get(i).getVarType().getNumVal();
+                outString.append(" " + tempSum +
+                        "*" + variables.get(i).getVarType().getNumVal() + " +");
+                tempSum = 0;
+            }
+        }
+        tempSum++;
+        try {
+            count += tempSum * variables.get(variables.size() - 1).getVarType().getNumVal();
+            outString.append(" " + tempSum +
+                    "*" + variables.
+                    get(variables.size() - 1).
+                    getVarType().getNumVal());
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("List is empty");
+        }
+        outString.append(" = " + count);
+        return outString.toString().replaceAll("\\.0", "");
     }
 
     public void codeChepinsAnalyzing() {
@@ -89,7 +124,7 @@ public class CodeModel {
                 pattern = Pattern.compile("\\b" + variable.getName() + "\\b");
                 matcher = pattern.matcher(line);
                 if (matcher.find()) { //Смотрим, есть ли в строке какая-либо из наших переменных
-                    pattern = Pattern.compile("gets\\.chomp");//gets.chomp.to_smth оператор ввода
+                    pattern = Pattern.compile("gets");//gets.chomp.to_smth оператор ввода
                     matcher = pattern.matcher(line);
                     if (matcher.find() &&
                             (variable.getVarType() != VarType.C ||
@@ -110,7 +145,7 @@ public class CodeModel {
                     if (matcher.find()) { //то скорее-всего переменная является управляющей
                         variable.setVarType(VarType.C);
                     }
-                    pattern = Pattern.compile("puts");//Оператор вывода
+                    pattern = Pattern.compile("puts|print");//Оператор вывода
                     matcher = pattern.matcher(line);
                     if (matcher.find()) {
                         variable.setIO(true); //Состояние IO необходимо для метрик ввода/вывода

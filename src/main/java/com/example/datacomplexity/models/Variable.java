@@ -1,10 +1,16 @@
 package com.example.datacomplexity.models;
 
 enum VarType {
-    P, //Вводимые, но не модифицируемые и не управляющие
-    M, //Модифицируемые, но не управляющие
-    C, //Модифицируемые и управляющие
-    T  //Мусор
+    P(1), M(2), C(3), T((float)0.5);
+    private float numVal;
+
+    VarType(float numVal) {
+        this.numVal = numVal;
+    }
+
+    public float getNumVal() {
+        return numVal;
+    }
 }
 
 public class Variable {

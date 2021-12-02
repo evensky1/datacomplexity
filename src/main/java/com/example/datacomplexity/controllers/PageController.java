@@ -26,7 +26,9 @@ public class PageController {
         model.addAttribute("spenTable", codeModel.codeSpenAnalyzing());
         codeModel.codeChepinsAnalyzing();
         model.addAttribute("chepinsTable", codeModel.getVariableList().getVariables());
+        model.addAttribute("chepinsCount", codeModel.getChepinsMetric(false));
         model.addAttribute("chepinsIOTable", codeModel.getVariableList().getIOVariables());
+        model.addAttribute("chepinsIOCount", codeModel.getChepinsMetric(true));
         System.out.println("amogus");
         return "PageLayout";
     }
