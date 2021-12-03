@@ -1,13 +1,18 @@
 package com.example.datacomplexity.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Component
+@Getter
+@Setter
 public class CodeModel {
     private final HashMap<String, Integer> spenTable;
     private final VariableList variableList;
@@ -23,19 +28,6 @@ public class CodeModel {
     public CodeModel() {
         this.variableList = new VariableList();
         this.spenTable = new HashMap<>();
-    }
-
-    public VariableList getVariableList() {
-        return variableList;
-    }
-
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     //Художественный фильм "Позаимствовали"
@@ -76,8 +68,8 @@ public class CodeModel {
         StringBuilder outString = new StringBuilder("Q =");
         int tempSum = 0;
         float count = 0;
-        LinkedList<Variable> variables;
-        if(isIO){
+        List<Variable> variables;
+        if (isIO) {
             variables = variableList.getIOVariables();
         } else {
             variables = variableList.getVariables();
@@ -96,10 +88,9 @@ public class CodeModel {
         tempSum++;
         try {
             count += tempSum * variables.get(variables.size() - 1).getVarType().getNumVal();
-            outString.append(" " + tempSum +
-                    "*" + variables.
-                    get(variables.size() - 1).
-                    getVarType().getNumVal());
+            outString.append(" " + tempSum + "*" +
+                    variables.get(variables.size() - 1).
+                            getVarType().getNumVal());
         } catch (IndexOutOfBoundsException e) {
             System.out.println("List is empty");
         }
@@ -153,5 +144,5 @@ public class CodeModel {
                 }
             }
         }
-    } //Ну и дерьмовый метод, если честно, пиздец. Но вроде рабочий(тест пока только через дебаг в контроллере)
+    }
 }

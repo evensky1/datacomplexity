@@ -1,6 +1,7 @@
 package com.example.datacomplexity.controllers;
 
 import com.example.datacomplexity.models.CodeModel;
+import com.example.datacomplexity.models.VariableList;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +30,8 @@ public class PageController {
         model.addAttribute("chepinsCount", codeModel.getChepinsMetric(false));
         model.addAttribute("chepinsIOTable", codeModel.getVariableList().getIOVariables());
         model.addAttribute("chepinsIOCount", codeModel.getChepinsMetric(true));
-        System.out.println("amogus");
+        System.out.println(codeModel.getVariableList().contains("b"));
+        codeModel.getVariableList().findVariableByName("begin1").ifPresent(System.out::println);
         return "PageLayout";
     }
 }
