@@ -40,8 +40,8 @@ public class CodeModel {
 
     //Художественный фильм "Позаимствовали"
     public HashMap<String, Integer> codeSpenAnalyzing() {
-        String codeTemp = code.replaceAll("(=begin\\s(.*\\r?\\n)*?=end\\s)|(#.*)", "");
-        codeTemp = codeTemp.replaceAll("(\".*?[^\\\\](\\\\\\\\)*\")|('.*?[^\\\\](\\\\\\\\)*')", "");
+        String codeTemp = code.replaceAll("(=begin\\s(.*\\r?\\n)*?=end\\s)|(#.*)", " ");
+        codeTemp = codeTemp.replaceAll("(\".*?[^\\\\](\\\\\\\\)*\")|('.*?[^\\\\](\\\\\\\\)*')", "\"\"");
 
         Pattern pattern = Pattern.compile("\\b[_a-zA-Z]\\w*\\b(?=\\s*=)");
         Matcher matcher = pattern.matcher(codeTemp);
