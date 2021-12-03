@@ -132,7 +132,7 @@ public class CodeModel {
                         variable.setVarType(VarType.P); //Переменная становится вводимой
                         variable.setIO(true); //Состояние IO необходимо как флажок метрик ввода/вывода
                     } else if (variable.getVarType() != VarType.C) {  //Иначе проверка на её модифицируемость
-                        pattern = Pattern.compile("\\b" + variable.getName() + "\\b\\s*[%+*/-]*=(?!=)|\\+\\+|--");
+                        pattern = Pattern.compile("\\b" + variable.getName() + "\\b\\s*([%+*/-]*=(?!=)|\\+\\+|--)");
                         matcher = pattern.matcher(line);
                         if (matcher.find()) {
                             if (spenTable.get(variable.getName()) != 0) {
