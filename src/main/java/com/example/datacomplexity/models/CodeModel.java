@@ -140,7 +140,7 @@ public class CodeModel {
                             } //Иначе сохранится Т
                         }
                     }
-                    pattern = Pattern.compile("\\bwhile\\b|\\buntil\\b|\\bif\\b|\\bfor\\b|\\bcase\\b");
+                    pattern = Pattern.compile("\\bwhile\\b|\\buntil\\b|\\bif\\b|\\bfor\\b|\\bcase\\b|\\bwhen\\b|\\elsif\\b");
                     matcher = pattern.matcher(line); //Если в строке с проверяемой переменной есть оператор ветвления,
                     if (matcher.find()) { //то скорее-всего переменная является управляющей
                         variable.setVarType(VarType.C);
